@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.rafaellopes.leadqualbot.core.Intent;
 import dev.rafaellopes.leadqualbot.core.IntentLoader;
 import dev.rafaellopes.leadqualbot.core.IntentMatcher;
+import dev.rafaellopes.leadqualbot.export.SessionExporter;
+import dev.rafaellopes.leadqualbot.export.SessionSummary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +62,10 @@ public class App {
 
         log.info("Knowledge base loaded: intents={}", intents.size());
 
+        SessionSummary sessionSummary = new SessionSummary();
+        Path exportPath = resolveExportPath();
+        SessionExporter exporter = new SessionExporter(exportPath);
+
         System.out.println("Bem-vindo ao LeadQualBot!");
         System.out.println("Digite /ajuda para ver os comandos disponíveis.\n");
 
@@ -98,8 +104,10 @@ public class App {
 
                         if (bestIntent.isPresent()) {
                             log.info("Selected intent: {}", bestIntent.get().getIntent());
+                            sessionSummary.recordIntent(bestIntent.get().getIntent());
                         } else {
                             log.info("No intent matched (fallback)");
+                            sessionSummary.recordFallback();
                         }
 
                         String response = bestIntent.map(Intent::getResponse).orElse(FALLBACK_MESSAGE);
@@ -107,6 +115,15 @@ public class App {
                     }
                 }
             }
+
+            // End session and export summary
+            sessionSummary.endSession();
+
+            // Show summary on console
+            System.out.println(SessionExporter.formatForConsole(sessionSummary));
+
+            // Try to export to file (graceful failure)
+            exporter.export(sessionSummary);
         }
     }
 
@@ -183,5 +200,15 @@ public class App {
         } catch (Exception e) {
             return CURRENT_DIR;
         }
+    }
+
+    /**
+     * Resolves the export path for session summaries.
+     * Sessions are exported to leads.txt in the current directory.
+     *
+     * @return the resolved path to the export file
+     */
+    private static Path resolveExportPath() {
+        return CURRENT_DIR.resolve("leads.txt");
     }
 }
