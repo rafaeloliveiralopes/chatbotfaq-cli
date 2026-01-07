@@ -14,17 +14,11 @@ import java.util.List;
 public class IntentLoader {
 
     private static final TypeReference<List<Intent>> INTENT_LIST = new TypeReference<>() {};
-    private static final Path DEFAULT_PATH = Path.of("data", "intents.json");
 
     private final ObjectMapper objectMapper;
 
     public IntentLoader(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-    }
-
-    public List<Intent> loadDefault() {
-        // Used by the CLI entrypoint to load data/intents.json
-        return load(DEFAULT_PATH);
     }
 
     public List<Intent> load(Path path) {
