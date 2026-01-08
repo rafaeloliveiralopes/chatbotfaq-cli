@@ -27,7 +27,7 @@ public class App {
     private static final Path CURRENT_DIR = Path.of("").toAbsolutePath();
 
     private static final String FALLBACK_MESSAGE =
-            "Desculpe, não entendi. Você pode reformular ou digitar /ajuda para ver as opções.";
+            "No momento não tenho essa informação. Digite /ajuda para ver as opções ou vou transferir você para um atendente humano que poderá te ajudar melhor!";
 
     private static final String HELP_MESSAGE = """
             Comandos disponíveis:
@@ -52,10 +52,12 @@ public class App {
         try {
             intents = loader.load(kbPath);
         } catch (Exception e) {
-            log.error("Failed to load knowledge base: {}", kbPath.toAbsolutePath());
+            log.error("Failed to load knowledge base: {}", kbPath.toAbsolutePath(), e);
 
-            System.err.println("Erro ao carregar base de conhecimento: " + e.getMessage());
-            System.err.println("Dica: use --kb <caminho-do-json> ou mantenha data/intents.json ao lado do jar.");
+            System.out.println("\n⚠️  Desculpe, estou com dificuldades técnicas no momento.");
+            System.out.println("Vou te passar para um atendente humano. Se desejar, você também pode entrar em contato conosco por nosso email.");
+            System.out.println("- E-mail de suporte:  contato@exemplo.com");
+            System.out.println("Nosso time terá prazer em te ajudar!");
             System.exit(1);
             return;
         }
