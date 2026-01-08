@@ -1,4 +1,4 @@
-# AI Agent Instructions - LeadQualBot CLI
+# AI Agent Instructions - Serviços de Automação CLI (Java)
 
 ## 🚨 MANDATORY READING BEFORE ANY WORK
 

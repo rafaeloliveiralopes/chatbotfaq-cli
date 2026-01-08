@@ -1,5 +1,6 @@
-# Session export files
-leads.txt
+
+# Log files
+leadqualbot.log
 
 # Maven
 target/

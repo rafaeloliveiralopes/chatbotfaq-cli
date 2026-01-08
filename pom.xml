@@ -120,6 +120,16 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Allow running with mvnw exec:java for testing -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <mainClass>dev.rafaellopes.leadqualbot.App</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

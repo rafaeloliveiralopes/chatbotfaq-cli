@@ -1,21 +1,114 @@
 [
   {
-    "intent": "orcamento",
-    "keywords": ["preco", "valor", "quanto custa", "orcamento", "cotacao"],
-    "response": "Ficarei feliz em preparar um orçamento para você! Por favor, me informe quais serviços você precisa e entraremos em contato em breve.",
-    "priority": 10
+    "intent": "o_que_e_automacao",
+    "keywords": [
+      "o que e automacao",
+      "o que é automacao",
+      "automacao",
+      "automatizar",
+      "automacao de processos"
+    ],
+    "response": "Automação é usar tecnologia para executar tarefas repetitivas com menos esforço manual. Em negócios, isso pode incluir responder clientes automaticamente, organizar pedidos, enviar mensagens, registrar dados e integrar ferramentas para reduzir retrabalho.",
+    "priority": 20
   },
   {
-    "intent": "agendamento",
-    "keywords": ["agendar", "marcar", "horario", "disponibilidade", "quando"],
-    "response": "Vou verificar a disponibilidade! Qual dia e horário seria melhor para você?",
-    "priority": 10
+    "intent": "o_que_e_chatbot",
+    "keywords": [
+      "o que e chatbot",
+      "o que é chatbot",
+      "chatbot",
+      "bot",
+      "robô de atendimento",
+      "robo de atendimento"
+    ],
+    "response": "Chatbot é um programa que simula uma conversa para responder perguntas e orientar o usuário. Ele pode funcionar por regras e palavras-chave (como este exemplo) ou por IA, dependendo do projeto.",
+    "priority": 20
   },
   {
-    "intent": "atendimento_humano",
-    "keywords": ["falar com atendente", "humano", "pessoa", "representante"],
-    "response": "Entendi! Vou transferir você para um de nossos atendentes. Aguarde um momento.",
-    "priority": 15
+    "intent": "automacao_com_chatbot",
+    "keywords": [
+      "automacao com chatbot",
+      "automação com chatbot",
+      "chatbot para automacao",
+      "chatbot para automação",
+      "automatizar com chatbot"
+    ],
+    "response": "Automação com chatbot é usar um chatbot para atender pessoas, tirar dúvidas e executar passos simples do fluxo, como direcionar o usuário, coletar contexto básico e encaminhar para o atendimento humano quando necessário.",
+    "priority": 25
+  },
+  {
+    "intent": "o_que_inclui_servico",
+    "keywords": [
+      "o que inclui",
+      "o que inclue",
+      "inclui",
+      "escopo",
+      "servico",
+      "serviço",
+      "entrega",
+      "o que voces entregam",
+      "o que vocês entregam"
+    ],
+    "response": "Em geral, serviços de automação com chatbot incluem: definição das perguntas e respostas, regras de atendimento, mensagens de fallback, comandos (ex.: ajuda e sair), testes básicos e documentação para você atualizar o conteúdo da base de conhecimento.",
+    "priority": 18
+  },
+  {
+    "intent": "como_funciona_conversa",
+    "keywords": [
+      "como funciona",
+      "como funciona uma conversa",
+      "fluxo de conversa",
+      "conversa com chatbot",
+      "como conversar",
+      "interacao",
+      "interação"
+    ],
+    "response": "Uma conversa com chatbot funciona assim: você faz uma pergunta, o bot identifica palavras-chave e retorna a resposta pré-definida mais adequada. Se não encontrar correspondência, ele responde com fallback e sugere exemplos de perguntas.",
+    "priority": 18
+  },
+  {
+    "intent": "beneficios",
+    "keywords": [
+      "beneficios",
+      "benefícios",
+      "vantagens",
+      "por que usar",
+      "vale a pena",
+      "ganhos"
+    ],
+    "response": "Os principais benefícios são: atendimento mais rápido, redução de tarefas repetitivas, padronização de respostas e mais organização no primeiro contato.",
+    "priority": 16
+  },
+  {
+    "intent": "limitacoes",
+    "keywords": [
+      "limitacoes",
+      "limitações",
+      "o que nao faz",
+      "o que não faz",
+      "nao consegue",
+      "não consegue",
+      "erros",
+      "falhas",
+      "quando nao funciona",
+      "quando não funciona"
+    ],
+    "response": "Um chatbot baseado em palavras-chave é ótimo para perguntas previsíveis, mas pode falhar com textos muito diferentes do esperado. Por isso, é importante manter a base de perguntas e respostas bem escrita e ampliar keywords conforme surgirem novas dúvidas.",
+    "priority": 16
+  },
+  {
+    "intent": "preco_fatores",
+    "keywords": [
+      "preco",
+      "preço",
+      "valor",
+      "quanto custa",
+      "orcamento",
+      "orçamento",
+      "cotacao",
+      "cotação"
+    ],
+    "response": "O valor costuma depender do escopo: quantidade de perguntas e respostas, número de fluxos, canal de atendimento e nível de personalização.",
+    "priority": 14
   }
 ]
-
