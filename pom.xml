@@ -88,7 +88,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>dev.rafaellopes.leadqualbot.App</mainClass>
+                            <mainClass>dev.rafaellopes.chatbotfaq.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -102,7 +102,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>dev.rafaellopes.leadqualbot.App</mainClass>
+                            <mainClass>dev.rafaellopes.chatbotfaq.App</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -127,7 +127,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.5.0</version>
                 <configuration>
-                    <mainClass>dev.rafaellopes.leadqualbot.App</mainClass>
+                    <mainClass>dev.rafaellopes.chatbotfaq.App</mainClass>
                 </configuration>
             </plugin>
         </plugins>

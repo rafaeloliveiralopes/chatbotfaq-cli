@@ -1,4 +1,4 @@
-package dev.rafaellopes.leadqualbot.core;
+package dev.rafaellopes.chatbotfaq.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;

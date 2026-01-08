@@ -1,9 +1,9 @@
-package dev.rafaellopes.leadqualbot;
+package dev.rafaellopes.chatbotfaq;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.rafaellopes.leadqualbot.core.Intent;
-import dev.rafaellopes.leadqualbot.core.IntentLoader;
-import dev.rafaellopes.leadqualbot.core.IntentMatcher;
+import dev.rafaellopes.chatbotfaq.core.Intent;
+import dev.rafaellopes.chatbotfaq.core.IntentLoader;
+import dev.rafaellopes.chatbotfaq.core.IntentMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
