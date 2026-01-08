@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 /**
- * CLI entrypoint for the LeadQualBot chatbot.
+ * CLI entrypoint for the ChatbotFAQ chatbot.
  * Runs an interactive loop reading user input and responding based on keyword intent matching.
  */
 @SuppressWarnings({"java:S106"}) // CLI uses System.out/System.err by design
@@ -42,7 +42,7 @@ public class App {
             """;
 
     public static void main(String[] args) {
-        log.info("Starting LeadQualBot");
+        log.info("Starting ChatbotFAQ");
 
         ObjectMapper objectMapper = new ObjectMapper();
         IntentLoader loader = new IntentLoader(objectMapper);
@@ -118,7 +118,7 @@ public class App {
     }
 
     private static void printWelcome() {
-        System.out.println("Bem-vindo ao LeadQualBot!");
+        System.out.println("Bem-vindo ao ChatbotFAQ!");
         System.out.println("A nossa empresa trabalha com Serviços de Automação com chatbot.\n");
         System.out.println("Me diga o que você gostaria de saber sobre automações com chatbot.");
         System.out.println("Dica: digite /ajuda para ver exemplos de perguntas e comandos.\n");

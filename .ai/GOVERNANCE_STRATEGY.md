@@ -1,4 +1,4 @@
-# Estratégia de Governança - LeadQualBot CLI
+# Estratégia de Governança - ChatbotFAQ CLI
 
 ## Problema
 Como garantir que agentes de IA (GitHub Copilot, ChatGPT, etc.) respeitem as regras do projeto em NOVAS sessões de conversa, dado que LLMs não têm memória persistente entre sessões?

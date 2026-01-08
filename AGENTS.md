@@ -3,7 +3,7 @@
 Este documento define regras mínimas para atuação de agentes (e humanos) neste repositório.
 O objetivo é preservar o escopo, evitar overengineering e garantir entregas previsíveis.
 
-O projeto é LeadQualBot CLI, um chatbot simples em Java, executado via console, baseado em palavras-chave e base externa em JSON.
+O projeto é ChatbotFAQ CLI, um chatbot simples em Java, executado via console, baseado em palavras-chave e base externa em JSON.
 
 ---
 
@@ -63,7 +63,7 @@ Comandos padrão:
 
 * `./mvnw clean package`
 * `./mvnw test`
-* `java -jar target/leadqualbot-cli.jar`
+* `java -jar target/chatbotfaq-cli.jar`
 
 Não introduzir ‘scripts’ auxiliares, Makefile ou ferramentas externas.
 

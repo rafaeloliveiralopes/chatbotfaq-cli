@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dev.rafaellopes</groupId>
-    <artifactId>leadqualbot-cli</artifactId>
+    <artifactId>chatbotfaq-cli</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 

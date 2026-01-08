@@ -1,4 +1,4 @@
-# GitHub Copilot Instructions for leadqualbot-cli
+# GitHub Copilot Instructions for chatbotfaq-cli
 
 ## Context
 This is a simple Java CLI chatbot project with strict governance rules to prevent scope creep and overengineering.
