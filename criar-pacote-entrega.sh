@@ -88,12 +88,13 @@ echo "✅ Pacote criado com sucesso!"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 echo "📦 Arquivo: $ZIP_FILE"
-echo "📂 Pasta:   $PACKAGE_DIR/"
 echo ""
-echo "📋 Conteúdo:"
-ls -lh "$PACKAGE_DIR"
+echo "📋 Conteúdo do ZIP:"
+unzip -l "$ZIP_FILE" | head -15
 echo ""
-tree "$PACKAGE_DIR" 2>/dev/null || find "$PACKAGE_DIR" -type f
-echo ""
+
+# Limpar pasta temporária (mantém apenas o .zip)
+rm -rf "$PACKAGE_DIR"
+
 echo "✨ Pronto para enviar!"
 

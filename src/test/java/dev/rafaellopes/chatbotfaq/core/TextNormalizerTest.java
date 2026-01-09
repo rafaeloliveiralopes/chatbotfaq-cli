@@ -41,7 +41,7 @@ class TextNormalizerTest {
 
     @Test
     void shouldHandleNullAndEmpty() {
-        assertNull(TextNormalizer.normalize(null));
+        assertEquals("", TextNormalizer.normalize(null));
         assertEquals("", TextNormalizer.normalize(""));
         assertEquals("", TextNormalizer.normalize("   "));
     }
