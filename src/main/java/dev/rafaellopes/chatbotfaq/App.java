@@ -25,7 +25,7 @@ public class App {
     private static final Path CURRENT_DIR = Path.of("").toAbsolutePath();
 
     private static final String FALLBACK_MESSAGE =
-            "Não tenho uma resposta para isso. :( \nDigite /ajuda para ver exemplos de perguntas ou tente reformular sua dúvida.";
+            "Não tenho uma resposta para isso. :( \nDigite: /ajuda, para ver exemplos de perguntas ou tente reformular a sua pergunta.";
 
     private static final String HELP_MESSAGE = """
             Exemplos de perguntas sobre automação com chatbots que você pode me fazer:
