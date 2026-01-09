@@ -18,6 +18,10 @@ public class TextNormalizer {
     private static final String UNACCENTED =
             "aaaaaeeeeiiiiooooouuuucnAAAAAEEEEIIIIOOOOOUUUUCN";
 
+    private TextNormalizer() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     public static String normalize(String text) {
         if (text == null) {
             return "";

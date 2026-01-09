@@ -90,44 +90,9 @@ public class App {
         while (running) {
             String userMessage = console.readLine("> ");
             if (userMessage == null) {
-                break;
-            }
-
-            if (userMessage.isBlank()) {
-                log.debug("Blank input received");
-                System.out.println(FALLBACK_MESSAGE + "\n");
-                continue;
-            }
-
-            String trimmed = userMessage.trim();
-
-            switch (trimmed) {
-                case "/sair" -> {
-                    log.debug("Command received: /sair");
-                    System.out.println("Conversa encerrada. Obrigado pela visita!");
-                    running = false;
-                }
-                case "/ajuda" -> {
-                    log.debug("Command received: /ajuda");
-                    System.out.println(HELP_MESSAGE);
-                }
-                case "/reiniciar" -> {
-                    log.debug("Command received: /reiniciar");
-                    System.out.println("Conversa reiniciada.\n");
-                    printWelcome();
-                }
-                default -> {
-                    Optional<Intent> bestIntent = findBestIntentSafe(trimmed, intents, matcher);
-
-                    if (bestIntent.isPresent()) {
-                        log.info("Selected intent: {}", bestIntent.get().getIntent());
-                    } else {
-                        log.info("No intent matched (fallback)");
-                    }
-
-                    String response = bestIntent.map(Intent::getResponse).orElse(FALLBACK_MESSAGE);
-                    System.out.println(response + "\n");
-                }
+                running = false;
+            } else {
+                running = processUserMessage(userMessage, intents, matcher);
             }
         }
     }
@@ -142,49 +107,63 @@ public class App {
 
                 String userMessage = reader.readLine();
                 if (userMessage == null) {
-                    break;
-                }
-
-                if (userMessage.isBlank()) {
-                    log.debug("Blank input received");
-                    System.out.println(FALLBACK_MESSAGE + "\n");
-                    continue;
-                }
-
-                String trimmed = userMessage.trim();
-
-                switch (trimmed) {
-                    case "/sair" -> {
-                        log.debug("Command received: /sair");
-                        System.out.println("Conversa encerrada. Obrigado pela visita!");
-                        running = false;
-                    }
-                    case "/ajuda" -> {
-                        log.debug("Command received: /ajuda");
-                        System.out.println(HELP_MESSAGE);
-                    }
-                    case "/reiniciar" -> {
-                        log.debug("Command received: /reiniciar");
-                        System.out.println("Conversa reiniciada.\n");
-                        printWelcome();
-                    }
-                    default -> {
-                        Optional<Intent> bestIntent = findBestIntentSafe(trimmed, intents, matcher);
-
-                        if (bestIntent.isPresent()) {
-                            log.info("Selected intent: {}", bestIntent.get().getIntent());
-                        } else {
-                            log.info("No intent matched (fallback)");
-                        }
-
-                        String response = bestIntent.map(Intent::getResponse).orElse(FALLBACK_MESSAGE);
-                        System.out.println(response + "\n");
-                    }
+                    running = false;
+                } else {
+                    running = processUserMessage(userMessage, intents, matcher);
                 }
             }
         } catch (Exception e) {
             log.error("Error reading user input", e);
         }
+    }
+
+    /**
+     * Process user message and return whether to continue running.
+     *
+     * @param userMessage the user input
+     * @param intents the list of intents
+     * @param matcher the intent matcher
+     * @return true to continue, false to exit
+     */
+    private static boolean processUserMessage(String userMessage, List<Intent> intents, IntentMatcher matcher) {
+        if (userMessage.isBlank()) {
+            log.debug("Blank input received");
+            System.out.println(FALLBACK_MESSAGE + "\n");
+            return true;
+        }
+
+        String trimmed = userMessage.trim();
+
+        switch (trimmed) {
+            case "/sair" -> {
+                log.debug("Command received: /sair");
+                System.out.println("Conversa encerrada. Obrigado pela visita!");
+                return false;
+            }
+            case "/ajuda" -> {
+                log.debug("Command received: /ajuda");
+                System.out.println(HELP_MESSAGE);
+            }
+            case "/reiniciar" -> {
+                log.debug("Command received: /reiniciar");
+                System.out.println("Conversa reiniciada.\n");
+                printWelcome();
+            }
+            default -> {
+                Optional<Intent> bestIntent = findBestIntentSafe(trimmed, intents, matcher);
+
+                if (bestIntent.isPresent()) {
+                    log.info("Selected intent: {}", bestIntent.get().getIntent());
+                } else {
+                    log.info("No intent matched (fallback)");
+                }
+
+                String response = bestIntent.map(Intent::getResponse).orElse(FALLBACK_MESSAGE);
+                System.out.println(response + "\n");
+            }
+        }
+
+        return true;
     }
 
     private static void printWelcome() {

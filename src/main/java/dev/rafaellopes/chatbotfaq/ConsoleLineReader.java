@@ -9,7 +9,6 @@ import java.nio.charset.*;
 
 /**
  * Reads lines from console with charset auto-detection.
- *
  * Strategy:
  * - Try strict UTF-8 decode (REPORT errors). If OK, candidate UTF-8.
  * - Decode with system default charset. Candidate default.
@@ -40,7 +39,7 @@ final class ConsoleLineReader implements AutoCloseable {
 
         byte[] bytes = buffer.toByteArray();
 
-        String utf8 = tryDecodeStrict(bytes, StandardCharsets.UTF_8);
+        String utf8 = tryDecodeUtf8Strict(bytes);
         String def = new String(bytes, Charset.defaultCharset());
 
         // Remove CR from CRLF
@@ -59,8 +58,8 @@ final class ConsoleLineReader implements AutoCloseable {
         return (utf8Score <= defScore) ? utf8 : def;
     }
 
-    private static String tryDecodeStrict(byte[] bytes, Charset charset) {
-        CharsetDecoder decoder = charset.newDecoder()
+    private static String tryDecodeUtf8Strict(byte[] bytes) {
+        CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
                 .onMalformedInput(CodingErrorAction.REPORT)
                 .onUnmappableCharacter(CodingErrorAction.REPORT);
 
