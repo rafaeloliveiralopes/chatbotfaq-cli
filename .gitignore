@@ -1,7 +1,7 @@
 
 # Log files
 *.log
-
+chatbotfaq.log
 # Maven
 target/
 
