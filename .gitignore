@@ -17,3 +17,15 @@ target/
 .DS_Store
 Thumbs.db
 
+# Delivery artifacts
+chatbotfaq-cli-entrega/
+chatbotfaq-cli-entrega.zip
+chatbot-faq-*.zip
+test-intents.sh
+test-chatbot.sh
+test-input.txt
+preparar-entrega.sh
+criar-pacote-entrega.sh
+GUIA_EXECUCAO.md
+INSTRUCOES_ENTREGA.md
+RELATORIO_TESTES.md
