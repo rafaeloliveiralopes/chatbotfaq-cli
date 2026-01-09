@@ -3,13 +3,17 @@ package dev.rafaellopes.chatbotfaq;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.*;
 
 /**
- * Reads lines from console with automatic charset detection.
- * Tries UTF-8 first, falls back to system default if replacement character is found.
- * This handles the common Windows scenario where terminal encoding differs from system default.
+ * Reads lines from console with charset auto-detection.
+ *
+ * Strategy:
+ * - Try strict UTF-8 decode (REPORT errors). If OK, candidate UTF-8.
+ * - Decode with system default charset. Candidate default.
+ * - Pick the best candidate using a small heuristic (avoids mojibake like "Ã©").
  */
 final class ConsoleLineReader implements AutoCloseable {
 
@@ -19,12 +23,6 @@ final class ConsoleLineReader implements AutoCloseable {
         this.in = in;
     }
 
-    /**
-     * Reads a line from input, auto-detecting charset.
-     *
-     * @return the line read, or null if EOF
-     * @throws IOException if an I/O error occurs
-     */
     String readLine() throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream(128);
 
@@ -37,19 +35,73 @@ final class ConsoleLineReader implements AutoCloseable {
         }
 
         if (b == -1 && buffer.size() == 0) {
-            return null; // EOF
+            return null;
         }
 
         byte[] bytes = buffer.toByteArray();
 
-        // Try UTF-8 first
-        String utf8 = new String(bytes, StandardCharsets.UTF_8);
-        if (utf8.indexOf('\uFFFD') >= 0) {
-            // Contains replacement character - UTF-8 decoding failed, use system default
-            return new String(bytes, Charset.defaultCharset()).replace("\r", "");
+        String utf8 = tryDecodeStrict(bytes, StandardCharsets.UTF_8);
+        String def = new String(bytes, Charset.defaultCharset());
+
+        // Remove CR from CRLF
+        if (utf8 != null) utf8 = utf8.replace("\r", "");
+        def = def.replace("\r", "");
+
+        // If UTF-8 failed strictly, use default.
+        if (utf8 == null) {
+            return def;
         }
 
-        return utf8.replace("\r", "");
+        // Heuristic: prefer the version with fewer mojibake markers.
+        int utf8Score = mojibakeScore(utf8);
+        int defScore = mojibakeScore(def);
+
+        return (utf8Score <= defScore) ? utf8 : def;
+    }
+
+    private static String tryDecodeStrict(byte[] bytes, Charset charset) {
+        CharsetDecoder decoder = charset.newDecoder()
+                .onMalformedInput(CodingErrorAction.REPORT)
+                .onUnmappableCharacter(CodingErrorAction.REPORT);
+
+        try {
+            CharBuffer cb = decoder.decode(ByteBuffer.wrap(bytes));
+            return cb.toString();
+        } catch (CharacterCodingException e) {
+            return null;
+        }
+    }
+
+    private static int mojibakeScore(String s) {
+        if (s == null || s.isEmpty()) {
+            return Integer.MAX_VALUE;
+        }
+
+        int score = 0;
+
+        // Replacement char means something went wrong in some decode path.
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '\uFFFD') {
+                score += 5;
+            }
+        }
+
+        // Common mojibake markers when UTF-8 is decoded as cp1252.
+        // "Ã", "Â" are frequent in PT-BR accented text corruption.
+        score += countChar(s, 'Ã') * 2;
+        score += countChar(s, 'Â') * 2;
+
+        return score;
+    }
+
+    private static int countChar(String s, char target) {
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == target) {
+                count++;
+            }
+        }
+        return count;
     }
 
     @Override
@@ -57,4 +109,3 @@ final class ConsoleLineReader implements AutoCloseable {
         in.close();
     }
 }
-

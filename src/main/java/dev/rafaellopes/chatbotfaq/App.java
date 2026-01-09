@@ -73,16 +73,74 @@ public class App {
 
         printWelcome();
 
-        // Use ConsoleLineReader for automatic charset detection (handles UTF-8/cp1252 mismatch on Windows)
+        // Prefer native console when available (best Unicode behavior on Windows).
+        var console = System.console();
+        if (console != null) {
+            runWithNativeConsole(console, intents, matcher);
+            return;
+        }
+
+        // Fallback for IDE terminals (System.console() is usually null).
+        runWithByteConsole(intents, matcher);
+    }
+
+    private static void runWithNativeConsole(java.io.Console console, List<Intent> intents, IntentMatcher matcher) {
+        boolean running = true;
+
+        while (running) {
+            String userMessage = console.readLine("> ");
+            if (userMessage == null) {
+                break;
+            }
+
+            if (userMessage.isBlank()) {
+                log.debug("Blank input received");
+                System.out.println(FALLBACK_MESSAGE + "\n");
+                continue;
+            }
+
+            String trimmed = userMessage.trim();
+
+            switch (trimmed) {
+                case "/sair" -> {
+                    log.debug("Command received: /sair");
+                    System.out.println("Conversa encerrada. Obrigado pela visita!");
+                    running = false;
+                }
+                case "/ajuda" -> {
+                    log.debug("Command received: /ajuda");
+                    System.out.println(HELP_MESSAGE);
+                }
+                case "/reiniciar" -> {
+                    log.debug("Command received: /reiniciar");
+                    System.out.println("Conversa reiniciada.\n");
+                    printWelcome();
+                }
+                default -> {
+                    Optional<Intent> bestIntent = findBestIntentSafe(trimmed, intents, matcher);
+
+                    if (bestIntent.isPresent()) {
+                        log.info("Selected intent: {}", bestIntent.get().getIntent());
+                    } else {
+                        log.info("No intent matched (fallback)");
+                    }
+
+                    String response = bestIntent.map(Intent::getResponse).orElse(FALLBACK_MESSAGE);
+                    System.out.println(response + "\n");
+                }
+            }
+        }
+    }
+
+    private static void runWithByteConsole(List<Intent> intents, IntentMatcher matcher) {
         try (ConsoleLineReader reader = new ConsoleLineReader(System.in)) {
             boolean running = true;
-            String userMessage;
 
             while (running) {
                 System.out.print("> ");
                 System.out.flush();
 
-                userMessage = reader.readLine();
+                String userMessage = reader.readLine();
                 if (userMessage == null) {
                     break;
                 }
@@ -136,17 +194,6 @@ public class App {
         System.out.println("Dica: digite /ajuda para ver exemplos de perguntas e comandos.\n");
     }
 
-    /**
-     * Decides the response for a user message by finding the best matching intent.
-     * Returns fallback message when no intent matches or processing fails.
-     * This method is package-private and pure (no side effects) to enable testing.
-     *
-     * @param userMessage the user input message
-     * @param intents list of available intents
-     * @param matcher the intent matcher to use
-     * @param fallbackMessage the fallback message to return when no match found
-     * @return the response message to display
-     */
     static String decideResponse(String userMessage, List<Intent> intents, IntentMatcher matcher, String fallbackMessage) {
         if (userMessage == null || userMessage.isBlank()) {
             return fallbackMessage;
@@ -175,15 +222,6 @@ public class App {
         }
     }
 
-    /**
-     * Resolves the knowledge base path from command-line arguments.
-     * If --kb <path> is provided, uses that path.
-     * Otherwise, tries data/intents.json in the current working directory first,
-     * then relative to the JAR directory.
-     *
-     * @param args the command-line arguments
-     * @return the resolved path to the knowledge base file
-     */
     private static Path resolveKbPath(String[] args) {
         if (args != null) {
             for (int i = 0; i < args.length; i++) {
@@ -196,13 +234,11 @@ public class App {
             }
         }
 
-        // Try current working directory first (most common case)
         Path cwdPath = CURRENT_DIR.resolve("data").resolve("intents.json");
         if (Files.exists(cwdPath)) {
             return cwdPath;
         }
 
-        // Fallback to JAR directory
         Path jarDir = getJarDir();
         return jarDir.resolve("data").resolve("intents.json");
     }
