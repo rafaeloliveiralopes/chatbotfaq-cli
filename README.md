@@ -210,8 +210,29 @@ chatbotfaq-cli/
 ├── data/
 │   └── intents.json
 ├── src/
-│   ├── main/java/
-│   └── test/java/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── dev/rafaellopes/chatbotfaq/
+│   │   │       ├── App.java
+│   │   │       └── core/
+│   │   │           ├── Intent.java
+│   │   │           ├── IntentLoader.java
+│   │   │           ├── IntentMatcher.java
+│   │   │           └── TextNormalizer.java
+│   │   └── resources/
+│   │       └── logback.xml
+│   └── test/
+│       ├── java/
+│       │   └── dev/rafaellopes/chatbotfaq/
+│       │       ├── AppTest.java
+│       │       └── core/
+│       │           ├── IntentLoaderTest.java
+│       │           ├── IntentMatcherTest.java
+│       │           ├── IntentTest.java
+│       │           └── TextNormalizerTest.java
+│       └── resources/
+│           └── fixtures/
+│               └── intents.json
 ├── target/
 ├── pom.xml
 └── README.md
