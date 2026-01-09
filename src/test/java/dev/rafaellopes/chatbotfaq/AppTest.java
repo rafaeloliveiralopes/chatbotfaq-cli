@@ -1,9 +1,9 @@
-package dev.rafaellopes.leadqualbot;
+package dev.rafaellopes.chatbotfaq;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.rafaellopes.leadqualbot.core.Intent;
-import dev.rafaellopes.leadqualbot.core.IntentMatcher;
+import dev.rafaellopes.chatbotfaq.core.Intent;
+import dev.rafaellopes.chatbotfaq.core.IntentMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

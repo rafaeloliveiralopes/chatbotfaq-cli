@@ -1,9 +1,9 @@
-package dev.rafaellopes.leadqualbot;
+package dev.rafaellopes.chatbotfaq;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.rafaellopes.leadqualbot.core.Intent;
-import dev.rafaellopes.leadqualbot.core.IntentLoader;
-import dev.rafaellopes.leadqualbot.core.IntentMatcher;
+import dev.rafaellopes.chatbotfaq.core.Intent;
+import dev.rafaellopes.chatbotfaq.core.IntentLoader;
+import dev.rafaellopes.chatbotfaq.core.IntentMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,7 +118,7 @@ public class App {
     }
 
     private static void printWelcome() {
-        System.out.println("Bem-vindo ao ChatbotFAQ!");
+        System.out.println("Bem-vindo(a) ao ChatbotFAQ!");
         System.out.println("A nossa empresa trabalha com Serviços de Automação com chatbot.\n");
         System.out.println("Me diga o que você gostaria de saber sobre automações com chatbot.");
         System.out.println("Dica: digite /ajuda para ver exemplos de perguntas e comandos.\n");
@@ -166,7 +166,8 @@ public class App {
     /**
      * Resolves the knowledge base path from command-line arguments.
      * If --kb <path> is provided, uses that path.
-     * Otherwise, resolves data/intents.json relative to the JAR directory or current directory.
+     * Otherwise, tries data/intents.json in the current working directory first,
+     * then relative to the JAR directory.
      *
      * @param args the command-line arguments
      * @return the resolved path to the knowledge base file
@@ -182,11 +183,19 @@ public class App {
                 }
             }
         }
-        Path baseDir = getAppBaseDir();
-        return baseDir.resolve("data").resolve("intents.json");
+
+        // Try current working directory first (most common case)
+        Path cwdPath = CURRENT_DIR.resolve("data").resolve("intents.json");
+        if (Files.exists(cwdPath)) {
+            return cwdPath;
+        }
+
+        // Fallback to JAR directory
+        Path jarDir = getJarDir();
+        return jarDir.resolve("data").resolve("intents.json");
     }
 
-    private static Path getAppBaseDir() {
+    private static Path getJarDir() {
         try {
             var uri = App.class.getProtectionDomain().getCodeSource().getLocation().toURI();
             Path location = Path.of(uri);

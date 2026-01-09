@@ -1,4 +1,4 @@
-package dev.rafaellopes.leadqualbot.core;
+package dev.rafaellopes.chatbotfaq.core;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +93,7 @@ public class IntentMatcher {
      * - Splits by spaces
      */
     private List<String> tokenize(String text) {
-        String normalized = TextNormalizer.normalize(text);
+        String normalized = dev.rafaellopes.chatbotfaq.core.TextNormalizer.normalize(text);
         if (normalized.isEmpty()) {
             return List.of();
         }

@@ -1,4 +1,4 @@
-package dev.rafaellopes.leadqualbot.core;
+package dev.rafaellopes.chatbotfaq.core;
 
 import java.text.Normalizer;
 import java.util.Locale;
