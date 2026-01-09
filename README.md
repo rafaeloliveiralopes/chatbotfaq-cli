@@ -42,6 +42,10 @@ Para verificar, abra o terminal e digite:
 java -version
 ```
 
+> 💡 **Ambientes testados:**
+> - **Desenvolvimento:** Linux (Ubuntu)
+> - **Testes Windows:** PowerShell (recomendado ao invés do CMD para evitar problemas de codificação de caracteres)
+
 ## Como executar
 
 1. Extraia o arquivo ZIP em uma pasta

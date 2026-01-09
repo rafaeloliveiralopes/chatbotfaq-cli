@@ -44,6 +44,11 @@ Java 21 ou superior instalado
 
 Verificar: java -version
 
+💡 AMBIENTES TESTADOS:
+   - Desenvolvimento: Linux (Ubuntu)
+   - Testes Windows: PowerShell (recomendado ao invés do CMD
+     para evitar problemas de codificação de caracteres)
+
 
 🚀 EXECUTAR
 -----------
